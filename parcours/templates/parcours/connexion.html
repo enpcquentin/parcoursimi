@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block titlepage%} Se connecter  {% endblock %}
+
+{% block content %}
+<div>
+{% if erreur %}
+<span style="color:#FF0000"><font size = 3> Veuillez vous connecter pour continuer </font></span><br>
+{% endif %}
+
+<form id="login_form" method="post" action="{% url 'connexion' %}">
+    {% csrf_token %}
+
+    <td> <strong> Utilisateur  </strong>  </td>
+
+    <input type="text" name="username" value="" size="50" />
+    <br />
+    <td> <strong>  Mot de passe  </strong>  </td>
+
+    <input type="password" name="password" value="" size="50" />
+    <br />
+
+    <input type="submit" value="Connexion" />
+</form>
+
+<form action="{% url 'password_reset' %}">
+    <input type="submit" value="Mot de passe oublié?" />
+</form>
+</div>
+
+{% endblock %}

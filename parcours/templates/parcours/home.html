@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Page d'accueil {% endblock %}
+
+
+
+
+
+
+
+{% block content %}
+<article style="float: left;  margin: 0 1.5%; width: 50%;">
+
+    <div id="map"></div>
+    <script>
+    
+ 
+
+      function initMap() {
+                      // coordonnees de Paris
+                        var paris = new google.maps.LatLng(48.856578, 2.351828);
+
+                        // recuperation de l'element HTML sur lequel afficher la carte
+                        var mapCanvas = document.getElementById("map");
+
+                        // creation effective de la carte
+                        var mapOptions = {
+                          center: paris,
+                          zoom: 10,
+                          mapTypeId: google.maps.MapTypeId.ROADMAP
+                        };
+                        var map = new google.maps.Map(mapCanvas, mapOptions);
+      }
+    </script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCz7usmwU_bwE46NxmQlKepw5a0GF2IYA&callback=initMap">
+    </script>
+
+</article>
+
+
+{% endblock %}
