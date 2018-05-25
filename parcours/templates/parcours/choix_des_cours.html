@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block titlepage%} Choix de mes cours {% endblock %}
+
+{% block content %}
+
+
+<head>
+<style>
+#bouton {
+	width:250px;
+	height:100px;
+	background:#fafafa;
+	box-shadow:2px 2px 8px #aaa;
+	font:bold 13px Arial;
+	border-radius:50%;
+	color:#555;
+}
+</style>
+<style type="text/css">
+	
+#conteneur
+{
+   width:100%; 
+   margin-top:20px; 
+   padding-bottom:25px; 
+   padding-top:5px;
+}
+ 
+#colonne1
+{
+   width:50%; 
+   float:left;
+}
+ 
+#colonne2
+{
+   width:50%; 
+   float:left;
+}
+ 
+#bas
+{
+   clear:both;
+}
+</style>
+</head>
+
+{% if option.name == "3A Ecole" %}
+<div id="conteneur">
+	<form align="center" action="{% url 'parcours' %}">
+	    <input id=bouton type="submit" value="Revenir au choix de 3A ou d'option." />
+	</form>
+   <div >
+   		<h3 align="center">Cours obligatoires 3A</h3>  
+
+   		<h3 align="center"> Pour le master {{master.name}}</h3>
+		<form method="post">
+			{% csrf_token %}
+   			<fieldset>
+       			<legend>Cours du premier semestre</legend> 
+				{% for obj in cours %}
+				{% if obj.semester == '1' %}
+				<input type="checkbox" name="sem1" value="{{obj.id}}"> {{obj.name}}<br>
+				{% endif %}
+				{% endfor %}
+				<div>
+				<input type="submit" value="Modifier mes choix de cours du semestre 1"/>
+				</div>
+  			</fieldset>
+		</form>
+	</div>
+</div>
+
+{% else %}
+
+<div id="conteneur">
+	<form align="center" action="{% url 'parcours' %}">
+	    <input id=bouton type="submit" value="Revenir au choix de 3A ou d'option." />
+	</form>
+   <div id="colonne1">
+   		<h3 align="center">Cours obligatoires 3A</h3>  
+
+   		<h3 align="center"> Pour le master {{master.name}}</h3>
+		<form method="post">
+			{% csrf_token %}
+   			<fieldset>
+       			<legend>Cours du premier semestre</legend> 
+				{% for obj in cours %}
+				{% if obj.semester == '1' %}
+				<input type="checkbox" name="sem1" value="{{obj.id}}"> {{obj.name}}<br>
+				{% endif %}
+				{% endfor %}
+				<div>
+				<input type="submit" value="Modifier mes choix de cours du semestre 1"/>
+				</div>
+  			</fieldset>
+		</form>
+
+
+		<form method="post">
+			{% csrf_token %}
+   			<fieldset>
+       			<legend>Cours du deuxième semestre</legend> 
+				{% for obj in cours %}
+				{% if obj.semester == '2' %}
+				<input type="checkbox" name="sem2" value="{{obj.id}}"> {{obj.name}}<br>
+				{% endif %}
+				{% endfor %}
+				<div>
+				<input type="submit" value="Modifier mes choix de cours du semestre 2"/>
+				</div>
+  			</fieldset>
+		</form>
+	</div>
+	<div id="colonne2">
+		<h3 align="center">Choix des cours supplementaire </h3>
+		<h3 align="center"> {{option_chosen}}</h3>
+	 	<form method="post">
+	 		{% csrf_token %}
+   			<fieldset>
+       			<legend>Modifier mon choix d'option</legend> 
+				{% for obj in options %}
+				{% if option_chosen == obj.name %}
+					<INPUT TYPE="radio" NAME= "option" VALUE={{obj.id}} CHECKED> {{obj.name}} <br /> <BR>
+				{%else%}
+					<INPUT TYPE="radio" NAME= "option" VALUE={{obj.id}}> {{obj.name}} <br /> <BR>
+				{%endif%}
+				{% endfor %}
+				<div>
+    			<button type="submit">Modifier mon choix d'option</button>
+  				</div>
+  			</fieldset>
+		</form>
+</div>
+
+   	</div>
+   <div id="bas">
+   </div>
+</div>
+
+
+{% endif %}
+
+
+
+{% endblock %}

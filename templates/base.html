@@ -32,6 +32,7 @@
                     <li><a href="{% url 'home' %}" >Accueil</a></li>
 
                     {% if user.is_authenticated %}
+                    <li><a href="{% url 'parcours' %}" >Parcours</a></li>
                     <li><a href="{% url 'deconnexion' %}" >Déconnexion</a></li>
                     {% else %}
                     <li><a href="{% url 'connexion' %}" >Connexion</a></li>
@@ -80,10 +81,6 @@
 
     </section>
     <!--END TESTIMONIAL SECTION-->
-
-
-
-
     {% block timeline %}
 
     {% endblock %}

@@ -3,6 +3,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import logout
 from django.contrib.auth import authenticate, login
 from parcours.forms import UserProfileForm, UserForm
+from parcours.models import Master, UserProfile, Option, Courses
 
 
 def home(request):
@@ -60,13 +61,35 @@ def inscription(request):
                   {'user_form': user_form, 'profile_form': profile_form, 'registered': registered,'adresse_incorrecte': False})
 
 
-
-
 def deconnexion(request):
     """ Vue de déconnexion """
-
     logout(request)
     return render(request, 'parcours/home.html')
+    
+def parcours(request):
+    masters = Master.objects.all()
+    options = Option.objects.all()
+    profile = request.user.userprofile
+    master_chosen = profile.master.name
+    option_chosen = profile.option.name
+    if request.method == 'POST':
+        try:
+            profile.master = Master.objects.filter(name=request.POST.get('master'))[0]
+            profile.save()
+            master_chosen = profile.master.name
+        except:
+            ind = request.POST.get('option')
+            profile.option = Option.objects.get(id=int(ind))
+            profile.save()
+            option_chosen = profile.option.name
+    return render(request, 'parcours/parcours.html', {'masters': masters, 'master_chosen':master_chosen, 'options': options, 'option_chosen':option_chosen})
 
 
+def choix_des_cours(request):
+    profile = request.user.userprofile
+    cours = Courses.objects.filter(master=profile.master)
+    return render(request, 'parcours/choix_des_cours.html',{ 'option' :profile.option, 'master':profile.master, 'cours': cours })
+    
+
+    
 
