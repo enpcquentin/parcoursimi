@@ -109,5 +109,27 @@ def list_masters(request):
                   {'master_form': master_form, 'masters': masters})
 
     
- 
+   
+def choices_students(request):    
+    profiles = UserProfile.objects.all()
+    masters = Master.objects.all()
+    cours = Courses.objects.all()
+    type_choix = ''
+    choix = ''
+    if request.method == 'POST':
+        choix_cours = request.POST.get('cours')
+        if (choix_cours != "all"):
+            choix_cours = Courses.objects.get(id = int(request.POST.get('cours')))
+            choix = choix_cours.title
+            type_choix = 'cours'
+            profiles = UserProfile.objects.filter(courses = choix_cours)
+        else :
+            choix_master = request.POST.get('master')
+            if (choix_master != "all"):
+                choix_master = Master.objects.get(id = int(request.POST.get('master')))
+                choix = choix_master.name
+                type_choix = 'master'
+                profiles = UserProfile.objects.filter(master = choix_master)
+    return render(request,'parcours/choices_students.html',
+                  {'profiles': profiles, 'type_choix': type_choix, 'choix':choix, 'masters': masters, 'cours':cours})
 

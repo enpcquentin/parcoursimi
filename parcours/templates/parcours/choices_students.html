@@ -51,47 +51,57 @@
 	<form method="post" >
 		{% csrf_token %}
    		<fieldset>
-       		<legend>Liste des étudiants ayant choisis ...</legend> 
+       		<legend> Filtrer la liste des étudiants.
+       	    </legend> 
 				<select name="master">
+					<option selected value="all">Tous les masters</option>
 				{% for obj in masters %}
 		           <option value="{{obj.id}}">{{obj.name}}</option>
 				{% endfor %}
 		       </select>
 		       <select name="cours">
+		       		<option selected value="all" >Tous les cours</option>
 		       	{% for obj in cours %}
 		       		<option value="{{obj.id}}">{{obj.name}}</option>
 		       	{% endfor %}
 		       </select>
 				<div>
-				<input type="submit" value="Obtenir la liste"/>
+				<input type="submit" value="Filtrer"/>
 				</div>
   			</fieldset>
 	</form>
-   		</br></br>
-		<table border="2" cellpadding="10" cellspacing="2" width="90%" align="center">
+
+	<table border="2" cellpadding="10" cellspacing="2" width="90%" align="center">
 			<tr>
-		       <td align="center" valign="center" COLSPAN=4 > <strong> Liste des masters </strong> </td> 
+		        <td align="center" valign="center" COLSPAN=4 > <strong> Liste
+		        {% if type_choix == '' %} 
+		       		de tous les étudiants 
+       			{% else %}
+       				{% if type_choix == 'master' %}
+       					des étudiants ayant choisis le master {{choix}}
+       				{% else %}
+       					des étudiants ayant choisi le cours {{choix}}
+       				{% endif %}
+       			{% endif %} </strong> </td> 
 		   </tr>
-		   {% for obj in masters %}
+		    <tr>
+		      <td align="center" valign="center">Nom</td>
+		      <td align="center" valign="center">Master</td>
+		      <td align="center" valign="center">Option</td>
+		      <td align="center" valign="center">Liste des cours</td>
+		   </tr>
+		   {% for obj in profiles %}
 		   <tr>
-		      <td align="center" valign="center">{{obj.name}}</td>
+		      <td align="center" valign="center">{{obj.user.username}}</td>
+		      <td align="center" valign="center">{{obj.master.name}}</td>
+		      <td align="center" valign="center">{{obj.option.name}}</td>
+		      <td align="center" valign="center"> 
+		      </td>
 		   </tr>
 		   {% endfor %}
-		</table>
-	{% else %}
-		<h3 aligne="center"> Vous ne disposez pas des droits pour accéder à cette page. </h3>
+	</table>
+	{% else %} 
+			<h3 aligne="center"> Vous ne disposez pas des droits pour accéder à cette page. </h3>
 	{% endif %}
-    <div id="colonne1">
-		<form id="master_form" method="post" action="{% url 'list_masters' %}"
-		      enctype="multipart/form-data">
-       			<legend>Ajouter un master</legend> 
-
-		    {% csrf_token %}
-		    {{ master_form.as_p }}
-
-		    <!-- Provide a button to click to submit the form. -->
-		    <input type="submit" name="submit" value="Ajouter ce master" />
-		</form>
-
 </div>
 {% endblock %}
