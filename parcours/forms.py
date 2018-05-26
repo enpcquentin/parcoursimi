@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from parcours.models import UserProfile
+from parcours.models import UserProfile, Master
 
 
 class ConnexionForm(forms.Form):
@@ -29,3 +29,14 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('master', 'option')
+        
+        
+class MasterForm(forms.ModelForm):
+    """ Formulaire de profil """
+    class Meta:
+        model = Master
+        labels = {
+        "website": "Site web du master",
+        "troisa_possible": "Cocher si les étudiants peuvent choisir ce master comme 3A"
+        }
+        fields = ('name', 'website', 'troisa_possible')

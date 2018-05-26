@@ -31,12 +31,17 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{% url 'home' %}" >Accueil</a></li>
 
-                    {% if user.is_authenticated %}
-                    <li><a href="{% url 'parcours' %}" >Parcours</a></li>
-                    <li><a href="{% url 'deconnexion' %}" >Déconnexion</a></li>
+                    {% if user.is_superuser %}
+                        <li><a href="{% url 'list_masters' %}" >Masters</a></li>
+                        <li><a href="{% url 'deconnexion' %}" >Déconnexion</a></li>
                     {% else %}
-                    <li><a href="{% url 'connexion' %}" >Connexion</a></li>
-                    <li><a href="{% url 'inscription' %}" >S'inscrire</a></li>
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'parcours' %}" >Parcours</a></li>
+                        <li><a href="{% url 'deconnexion' %}" >Déconnexion</a></li>
+                        {% else %}
+                        <li><a href="{% url 'connexion' %}" >Connexion</a></li>
+                        <li><a href="{% url 'inscription' %}" >S'inscrire</a></li>
+                        {% endif %}
                     {% endif %}
                 </ul>
                 <div class="collapse nav navbar-nav nav-collapse" id="nav-collapse3">

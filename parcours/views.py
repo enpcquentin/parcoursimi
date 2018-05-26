@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render,redirect
 from django.contrib.auth import logout
 from django.contrib.auth import authenticate, login
-from parcours.forms import UserProfileForm, UserForm
+from parcours.forms import UserProfileForm, UserForm, MasterForm
 from parcours.models import Master, UserProfile, Option, Courses
 
 
@@ -21,7 +21,7 @@ def connexion(request):
         if user:
             # on vérifie que le compte courant est valide et actif
             # si c'est le cas, on connecte l'utilisateur
-            if user.is_active and not(user.is_superuser):
+            if user.is_active:
                 login(request, user)
                 return HttpResponseRedirect('/parcours/home')
             else:
@@ -91,5 +91,24 @@ def choix_des_cours(request):
     return render(request, 'parcours/choix_des_cours.html',{ 'option' :profile.option, 'master':profile.master, 'cours': cours })
     
 
+   
+def list_masters(request):
+    indices=[]
+    if request.method == 'POST':
+        master_form = MasterForm(data=request.POST)
+        if master_form.is_valid():
+            master_form.save()
+        else:
+            print(master_form.errors)
+        indice = request.POST.get('del')
+        if indice != None:
+            Master.delete(Master.objects.get(id=int(indice)))
+    else:
+        master_form = MasterForm()
+    masters = Master.objects.all()
+    return render(request,'parcours/list_masters.html',
+                  {'master_form': master_form, 'masters': masters, 'ind':indices})
+
     
+ 
 

@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 class Master(models.Model):
     name = models.CharField(max_length=100)
     website = models.URLField()
+    troisa_possible = models.BooleanField(default=1)
     def __str__(self):
         return self.name
 
@@ -18,6 +19,8 @@ class Courses(models.Model):
         ('Fr', 'Vendredi'),
     )
     master = models.ForeignKey(Master, on_delete=models.CASCADE)
+    # l'attribut obligatoire vaut 1 si le cours en question est obligatoire pour le master associé
+    obligatoire = models.BooleanField(default=0)
     title = models.CharField(max_length=100)
     lat = models.FloatField()
     long = models.FloatField()
@@ -28,6 +31,10 @@ class Courses(models.Model):
   
 class Option(models.Model):
     name = models.CharField(max_length=300)
+    nb_cours = models.PositiveSmallIntegerField(default=0)
+    nb_ects_cours = models.FloatField(default=0)
+    nb_projet = models.PositiveSmallIntegerField(default=0)
+    nb_ects_projet = models.FloatField(default=0)
     def __str__(self):
         return self.name
 

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block titlepage%}  {% endblock %}
+
+{% block content %}
+
+<head>
+<style>
+#bouton {
+	width:200px;
+	height:85px;
+	background:#fafafa;
+	box-shadow:2px 2px 8px #aaa;
+	font:bold 13px Arial;
+	border-radius:50%;
+	color:#555;
+}
+</style>
+<style type="text/css">
+	
+#conteneur
+{
+   width:100%; 
+   margin-top:20px; 
+   padding-bottom:25px; 
+   padding-top:5px;
+}
+ 
+#colonne1
+{
+   width:50%; 
+   float:left;
+}
+ 
+#colonne2
+{
+   width:50%; 
+   float:left;
+}
+ 
+#bas
+{
+   clear:both;
+}
+</style>
+</head>
+
+
+<div id="conteneur">
+	{% if user.is_superuser %}
+   		</br></br>
+		<table border="2" cellpadding="10" cellspacing="2" width="90%" align="center">
+			<tr>
+		       <td align="center" valign="center" COLSPAN=4 > <strong> Liste des masters </strong> </td> 
+		   </tr>
+		   {% for obj in masters %}
+		   <tr>
+		      <td align="center" valign="center">{{obj.name}}</td>
+		   </tr>
+		   {% endfor %}
+		</table>
+	{% else %}
+		<h3 aligne="center"> Vous ne disposez pas des droits pour accéder à cette page. </h3>
+	{% endif %}
+    <div id="colonne1">
+		<form id="master_form" method="post" action="{% url 'list_masters' %}"
+		      enctype="multipart/form-data">
+       			<legend>Ajouter un master</legend> 
+
+		    {% csrf_token %}
+		    {{ master_form.as_p }}
+
+		    <!-- Provide a button to click to submit the form. -->
+		    <input type="submit" name="submit" value="Ajouter ce master" />
+		</form>
+    </div>
+     <div id="colonne2">
+		<form method="post" >
+				{% csrf_token %}
+   				<fieldset>
+       			<legend>Supprimer un master</legend> 
+				{% for obj in masters %}
+				<input type="radio" name="del" value="{{obj.id}}"> {{obj.name}}<br>
+				{% endfor %}
+				<div>
+				<input type="submit" value="Supprimer ce Master"/>
+				</div>
+  			</fieldset>
+		</form>
+    </div>
+</div>
+{% endblock %}
