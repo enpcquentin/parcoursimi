@@ -28,7 +28,7 @@ def connexion(request):
                 return HttpResponse("Vous n'êtes autorisé à vous connecter.")
         else:
             print("Erreur dans le mot de passe ou l'identifiant : {0}, {1}".format(username, password))
-            return HttpResponse("Erreur dans le mot de passe ou l'identifiant.")
+            return HttpResponse("Erreur dans le mot de passe ou l'identifiant")
     else:
         return render(request, 'parcours/connexion.html', {'erreur' : False})
 
@@ -67,7 +67,7 @@ def deconnexion(request):
     return render(request, 'parcours/home.html')
     
 def parcours(request):
-    masters = Master.objects.all()
+    masters = Master.objects.filter(troisa_possible=True)
     options = Option.objects.all()
     profile = request.user.userprofile
     master_chosen = profile.master.name
@@ -93,7 +93,6 @@ def choix_des_cours(request):
 
    
 def list_masters(request):
-    indices=[]
     if request.method == 'POST':
         master_form = MasterForm(data=request.POST)
         if master_form.is_valid():
@@ -107,7 +106,7 @@ def list_masters(request):
         master_form = MasterForm()
     masters = Master.objects.all()
     return render(request,'parcours/list_masters.html',
-                  {'master_form': master_form, 'masters': masters, 'ind':indices})
+                  {'master_form': master_form, 'masters': masters})
 
     
  

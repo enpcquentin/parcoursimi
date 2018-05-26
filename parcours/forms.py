@@ -36,6 +36,7 @@ class MasterForm(forms.ModelForm):
     class Meta:
         model = Master
         labels = {
+        "name": "Nom du master",
         "website": "Site web du master",
         "troisa_possible": "Cocher si les étudiants peuvent choisir ce master comme 3A"
         }

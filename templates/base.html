@@ -33,6 +33,7 @@
 
                     {% if user.is_superuser %}
                         <li><a href="{% url 'list_masters' %}" >Masters</a></li>
+                        <li><a href="{% url 'choices_students' %}" >Choix des étudiants</a></li>
                         <li><a href="{% url 'deconnexion' %}" >Déconnexion</a></li>
                     {% else %}
                         {% if user.is_authenticated %}
@@ -64,7 +65,7 @@
             <div class="row text-center">
                 <div  class="col-md-12" >
                     <span class="head-main" > Ponts ta 3A ! </span>
-                    <h3 class="head-last col-md-8 col-md-offset-2  col-sm-8 col-sm-offset-2">MVA, MPRO, MAAF, ANEDP</h3>
+                    <h3 class="head-last col-md-8 col-md-offset-2  col-sm-8 col-sm-offset-2"> Crée et valide ton parcours !</h3>
                 </div>
             </div>
         </div>

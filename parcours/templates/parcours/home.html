@@ -10,35 +10,31 @@
 
 
 {% block content %}
-<article style="float: left;  margin: 0 1.5%; width: 50%;">
 
-    <div id="map"></div>
-    <script>
-    
- 
+<h3> L'objectif de cet outil est d'accompagner les élèves de l'école des Ponts du département IMI dans leurs choix de 3ème année. En créant un compte, tout élève concerné aura la possibilité de choisir son master pour sa 3A, de choisir son "option" et de choisir ses cours. Il lui sera également possible de rentrer en contact avec le département pour toute question concernant son parcours.
 
-      function initMap() {
-                      // coordonnees de Paris
-                        var paris = new google.maps.LatLng(48.856578, 2.351828);
+</br> <BR>
 
-                        // recuperation de l'element HTML sur lequel afficher la carte
-                        var mapCanvas = document.getElementById("map");
+Un calcul sera alors effectué pour alerter l'étudiant sur la conformité de ses choix avec les modalités de validation du département. 
+</br> <BR>
 
-                        // creation effective de la carte
-                        var mapOptions = {
-                          center: paris,
-                          zoom: 10,
-                          mapTypeId: google.maps.MapTypeId.ROADMAP
-                        };
-                        var map = new google.maps.Map(mapCanvas, mapOptions);
-      }
-    </script>
 
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCz7usmwU_bwE46NxmQlKepw5a0GF2IYA&callback=initMap">
-    </script>
+Ainsi, un avertissement sera donné pour :
 
-</article>
+<ul>
+  <li> Un nombre d'ECTS insuffisant</li>
+  <li> Un conflit au niveau de l'emploi du temps : deux cours ayant lieu la même journée et géographiquement éloignés </li>
 
+</ul>
+
+De plus, certains choix seront automatiquement refusés :
+
+<ul>
+  <li> Un cours choisi à la fois comme obligatoire et optionnel </li>
+  <li> Deux cours dont les horaires sont incompatibles </li>
+
+</ul>
+
+</h3>
 
 {% endblock %}

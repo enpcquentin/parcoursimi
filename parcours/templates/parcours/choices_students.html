@@ -48,6 +48,25 @@
 
 <div id="conteneur">
 	{% if user.is_superuser %}
+	<form method="post" >
+		{% csrf_token %}
+   		<fieldset>
+       		<legend>Liste des étudiants ayant choisis ...</legend> 
+				<select name="master">
+				{% for obj in masters %}
+		           <option value="{{obj.id}}">{{obj.name}}</option>
+				{% endfor %}
+		       </select>
+		       <select name="cours">
+		       	{% for obj in cours %}
+		       		<option value="{{obj.id}}">{{obj.name}}</option>
+		       	{% endfor %}
+		       </select>
+				<div>
+				<input type="submit" value="Obtenir la liste"/>
+				</div>
+  			</fieldset>
+	</form>
    		</br></br>
 		<table border="2" cellpadding="10" cellspacing="2" width="90%" align="center">
 			<tr>
@@ -59,7 +78,10 @@
 		   </tr>
 		   {% endfor %}
 		</table>
-		    <div id="colonne1">
+	{% else %}
+		<h3 aligne="center"> Vous ne disposez pas des droits pour accéder à cette page. </h3>
+	{% endif %}
+    <div id="colonne1">
 		<form id="master_form" method="post" action="{% url 'list_masters' %}"
 		      enctype="multipart/form-data">
        			<legend>Ajouter un master</legend> 
@@ -70,24 +92,6 @@
 		    <!-- Provide a button to click to submit the form. -->
 		    <input type="submit" name="submit" value="Ajouter ce master" />
 		</form>
-    </div>
-     <div id="colonne2">
-		<form method="post" >
-				{% csrf_token %}
-   				<fieldset>
-       			<legend>Supprimer un master</legend> 
-				{% for obj in masters %}
-				<input type="radio" name="del" value="{{obj.id}}"> {{obj.name}}<br>
-				{% endfor %}
-				<div>
-				<input type="submit" value="Supprimer ce Master"/>
-				</div>
-  			</fieldset>
-		</form>
-    </div>
-	{% else %}
-		<h3 aligne="center"> Vous ne disposez pas des droits pour accéder à cette page. </h3>
-	{% endif %}
 
 </div>
 {% endblock %}

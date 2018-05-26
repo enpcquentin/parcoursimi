@@ -39,7 +39,11 @@ class Option(models.Model):
         return self.name
 
 class UserProfile(models.Model):
-    option = models.ForeignKey(Option, on_delete=models.CASCADE)
-    master = models.ForeignKey(Master, on_delete=models.CASCADE)
+    def default_option():
+        return Option.objects.all()[0]
+    def default_master():
+        return Master.objects.all()[0]
+    option = models.ForeignKey(Option, default=default_option, on_delete=models.SET_DEFAULT)
+    master = models.ForeignKey(Master, default=default_master, on_delete=models.SET_DEFAULT)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     courses = models.ManyToManyField(Courses) 

@@ -55,6 +55,7 @@
    			<fieldset>
        			<legend>Modifier mon choix de la 3A</legend> 
 				{% for obj in masters %}
+
 				{% if master_chosen == obj.name %}
 					<INPUT TYPE="radio" NAME= "master" VALUE={{obj.name}} CHECKED> <a href={{obj.website}}>{{obj.name}} </a> <br /> <BR>
 				{%else%}
